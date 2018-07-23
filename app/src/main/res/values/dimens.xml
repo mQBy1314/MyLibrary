@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--圆角-->
+    <dimen name="radius">4dp</dimen>
+    <!--阴影-->
+    <dimen name="elevation">4dp</dimen>
+
+    <!--标准间距值-->
+    <dimen name="interval_4">4dp</dimen>
+    <dimen name="interval_8">8dp</dimen>
+    <dimen name="interval_10">10dp</dimen>
+    <dimen name="interval_16">16dp</dimen>
+    <dimen name="interval_24">24dp</dimen>
+    <dimen name="interval_32">32dp</dimen>
+    <dimen name="interval_40">40dp</dimen>
+    <dimen name="interval_48">48dp</dimen>
+    <dimen name="interval_56">56dp</dimen>
+    <dimen name="interval_64">64dp</dimen>
+    <dimen name="interval_72">72dp</dimen>
+    <dimen name="interval_80">80dp</dimen>
+    <dimen name="interval_88">88dp</dimen>
+    <!--标准文字大小-->
+    <dimen name="text">12sp</dimen>
+    <dimen name="textX">14sp</dimen>
+    <dimen name="textXX">16sp</dimen>
+    <dimen name="textXXX">20sp</dimen>
+    <dimen name="textXXXX">24sp</dimen>
+    <dimen name="textXXXXX">34sp</dimen>
+</resources>
