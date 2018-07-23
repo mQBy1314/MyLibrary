@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mqby.mqlibrary">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- <application> -->
+    <!-- 权限activity -->
+    <!-- <activity android:name=".activity.PermissionsActivity" -->
+    <!-- android:theme="@style/PermissionsTheme"/> -->
+    <!-- </application> -->
+    <application>
+        <activity android:name=".activity.SelectListActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden"></activity>
+    </application>
+
+</manifest>
