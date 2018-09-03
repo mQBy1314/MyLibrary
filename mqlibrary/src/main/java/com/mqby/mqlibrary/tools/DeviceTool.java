@@ -1,25 +1,22 @@
 package com.mqby.mqlibrary.tools;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
-import com.mqby.mqlibrary.activity.PermissionsActivity;
-import com.mqby.mqlibrary.activity.PermissionsCallBack;
 
 import java.util.List;
 
@@ -223,32 +220,26 @@ public class DeviceTool {
         return false;
     }
 
-    /**
-     * 判断是否是真机
-     *
-     * @param context
-     * @return
-     */
-    public boolean isRealDevice(final Activity context) {
-        final TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        PermissionsActivity.startActivityForResult(context, new PermissionsCallBack() {
-            @Override
-            public void onAdoptPermissions() {
-                //已授权
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-                    String deviceId = telephonyManager.getDeviceId();
-                    // 如果 运行的 是一个 模拟器
-                    realDevice = !(deviceId == null || deviceId.trim().length() == 0
-                            || deviceId.matches("0+"));
-                }
-            }
-
-            @Override
-            public void onRefusePermissions() {
-                //权限被拒绝
-                LogTool.i("未获取权限");
-            }
-        }, Manifest.permission.READ_PHONE_STATE);
-        return realDevice;
+    public static boolean isEmulator(Context mContext) {
+        String url = "tel:" + "123456";
+        Intent intent = new Intent();
+        intent.setData(Uri.parse(url));
+        intent.setAction(Intent.ACTION_DIAL);
+        // 是否可以处理跳转到拨号的 Intent
+        boolean canResolveIntent = intent.resolveActivity(mContext.getPackageManager()) != null;
+        return Build.FINGERPRINT.startsWith("generic")
+                || Build.FINGERPRINT.toLowerCase().contains("vbox")
+                || Build.FINGERPRINT.toLowerCase().contains("test-keys")
+                || Build.MODEL.contains("google_sdk")
+                || Build.MODEL.contains("Emulator")
+                || Build.SERIAL.equalsIgnoreCase("unknown")
+                || Build.SERIAL.equalsIgnoreCase("android")
+                || Build.MODEL.contains("Android SDK built for x86")
+                || Build.MANUFACTURER.contains("Genymotion")
+                || (Build.BRAND.startsWith("generic")
+                && Build.DEVICE.startsWith("generic"))
+                || "google_sdk".equals(Build.PRODUCT)
+                || ((TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE)).getNetworkOperatorName().toLowerCase().equals("android")
+                || !canResolveIntent;
     }
 }
