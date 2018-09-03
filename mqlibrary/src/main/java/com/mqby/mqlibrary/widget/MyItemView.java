@@ -3,6 +3,7 @@ package com.mqby.mqlibrary.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
@@ -11,7 +12,6 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,6 +32,7 @@ public class MyItemView extends RelativeLayout {
 
     public static final int TYPE_TEXT = 100;
     public static final int TYPE_EDIT = 101;
+    public static final int TYPE_FLOAT = 102;
     private OnClickListener mListener;
 
     @Retention(RetentionPolicy.SOURCE)
@@ -117,8 +118,9 @@ public class MyItemView extends RelativeLayout {
             int rightTextType = ta.getInt(R.styleable.MyItemView_right_text_type, TYPE_TEXT);
             setRightTextType(rightTextType);
 
-            int inputType = ta.getInt(R.styleable.MyItemView_android_inputType, EditorInfo.TYPE_CLASS_TEXT);
-            tvRight.setInputType(inputType);
+            int inputType = ta.getInt(R.styleable.MyItemView_android_inputType, -11);
+            if (inputType != -11)
+                tvRight.setInputType(inputType);
 
             ta.recycle();
         }
@@ -148,6 +150,16 @@ public class MyItemView extends RelativeLayout {
         view.setBackgroundResource(R.color.line);
         view.setVisibility(GONE);
         return view;
+    }
+
+    /**
+     * 设置背景颜色
+     * @param color
+     * @return
+     */
+    public MyItemView setMyBackgroundColor(@ColorInt int color) {
+        root.setBackgroundColor(color);
+        return this;
     }
 
     /**

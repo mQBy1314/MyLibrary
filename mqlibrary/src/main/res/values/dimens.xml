@@ -2,15 +2,18 @@
 <resources>
 
     <!--圆角-->
-    <dimen name="radius">4dp</dimen>
+    <dimen name="radius">6dp</dimen>
     <!--阴影-->
-    <dimen name="elevation">4dp</dimen>
+    <dimen name="elevation">4px</dimen>
 
     <!--标准间距值-->
     <dimen name="interval_4">4dp</dimen>
     <dimen name="interval_8">8dp</dimen>
     <dimen name="interval_10">10dp</dimen>
+    <dimen name="interval_12">12dp</dimen>
+    <dimen name="interval_14">14dp</dimen>
     <dimen name="interval_16">16dp</dimen>
+    <dimen name="interval_20">20dp</dimen>
     <dimen name="interval_24">24dp</dimen>
     <dimen name="interval_32">32dp</dimen>
     <dimen name="interval_40">40dp</dimen>
@@ -27,4 +30,7 @@
     <dimen name="textXXX">20sp</dimen>
     <dimen name="textXXXX">24sp</dimen>
     <dimen name="textXXXXX">34sp</dimen>
+
+    <dimen name="work_item_elevation">2px</dimen>
+
 </resources>

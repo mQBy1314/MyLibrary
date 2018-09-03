@@ -11,6 +11,7 @@
     <color name="text_hint">#a0a0a0</color>
     <color name="text_black">@android:color/black</color>
     <color name="text_red">#ff0000</color>
+    <color name="text_hint_red">#ff8282</color>
 
     <!--点击事件的响应颜色-->
     <color name="click">#8ca1a1a1</color>

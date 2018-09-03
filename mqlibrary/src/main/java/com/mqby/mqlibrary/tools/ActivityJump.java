@@ -10,6 +10,8 @@ import android.support.annotation.StringDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
  * @author MaQiang
  * @time 2018/6/11 0011 22:07
@@ -72,5 +74,20 @@ public class ActivityJump {
         intent.setClass(context, cls);
         intent.putExtras(bundle);
         context.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 跳转新栈
+     *
+     * @param context
+     * @param cls
+     * @param bundle
+     */
+    public static void startActivityNewTask(@NonNull Context context, @NonNull Class<?> cls, Bundle bundle) {
+        Intent intent = new Intent();
+        intent.setClass(context, cls);
+        intent.putExtras(bundle);
+        intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

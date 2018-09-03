@@ -3,6 +3,15 @@ package com.mqby.mqlibrary.tools;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
+import android.util.Base64;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Map;
 
 /**
  * @author MaQiang
@@ -88,6 +97,11 @@ public class SPTool {
         return null;
     }
 
+    public static Map<String, String> getAllByFileName(String fileName) {
+        SharedPreferences sp = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+        return (Map<String, String>) sp.getAll();
+    }
+
     /**
      * 移除指定数据
      */
@@ -123,4 +137,138 @@ public class SPTool {
         editor.clear().commit();
     }
 
+    public static void saveUserId(long userId) {
+        save(SPConstant.USER_ID, userId);
+    }
+
+    public static long getUserId() {
+        long userId = -1L;
+        try {
+            userId = (long) get(SPConstant.USER_ID, -1L);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userId;
+    }
+
+    public static void saveToken(String token) {
+        save(SPConstant.TOKEN, token);
+    }
+
+    public static String getToken() {
+        return (String) get(SPConstant.TOKEN, "-1");
+    }
+
+    public static void saveLoginName(String loginName) {
+        save(SPConstant.LOGIN_NAME, loginName);
+    }
+
+    public static String getLoginName() {
+        return (String) get(SPConstant.LOGIN_NAME, "");
+    }
+
+    public static void saveLoginPsw(String loginPsw) {
+        save(SPConstant.LOGIN_PASSWORD, loginPsw);
+    }
+
+    public static String getLoginPsw() {
+        return (String) get(SPConstant.LOGIN_PASSWORD, "");
+    }
+
+    public static void saveNickName(String nickName) {
+        save(SPConstant.USER_NIKNAME, nickName);
+    }
+
+    public static String getNickName() {
+        return (String) get(SPConstant.USER_NIKNAME, "-1");
+    }
+
+    public static void saveUserTag(String tag) {
+        save(SPConstant.USER_TAG, tag);
+    }
+
+    public static String getUserTag() {
+        return (String) get(SPConstant.USER_TAG, "-1");
+    }
+
+    /**
+     * 当前用户打开用车申请时,需要判断是否显示导航的按钮,用该方法保存用户是否有此权限到sp
+     */
+    public static void saveNavi() {
+        save(SPConstant.NAVI, SPConstant.NAVI);
+    }
+
+    /**
+     * 从SP中获取,当前用户是否有显示导航按钮的权限
+     *
+     * @return
+     */
+    public static String getNavi() {
+        return (String) get(SPConstant.NAVI, "");
+    }
+
+    public static void saveCurrentUserInfo(Object object) {
+        saveObj(context, "CurrentUserInfo", object);
+    }
+
+    public static Object getCurrentUserInfo() {
+        return getObj(context, "CurrentUserInfo");
+    }
+
+    /**
+     * 将对象进行base64编码后保存到SharePref中
+     *
+     * @param context
+     * @param key
+     * @param object
+     */
+    public static void saveObj(Context context, String key, Object object) {
+        SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(baos);
+            oos.writeObject(object);
+            // 将对象的转为base64码
+            String objBase64 = new String(Base64.encode(baos.toByteArray(),
+                    Base64.DEFAULT));
+
+            sp.edit().putString(key, objBase64).commit();
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 将SharePref中经过base64编码的对象读取出来
+     *
+     * @param context
+     * @param key
+     * @param
+     * @return
+     */
+    public static Object getObj(Context context, String key) {
+        SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        String objBase64 = sp.getString(key, null);
+        if (TextUtils.isEmpty(objBase64)) {
+            return null;
+        }
+
+        // 对Base64格式的字符串进行解码
+        byte[] base64Bytes = Base64.decode(objBase64.getBytes(), Base64.DEFAULT);
+        ByteArrayInputStream bais = new ByteArrayInputStream(base64Bytes);
+
+        ObjectInputStream ois;
+        Object obj = null;
+        try {
+            ois = new ObjectInputStream(bais);
+            obj = (Object) ois.readObject();
+            ois.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
 }

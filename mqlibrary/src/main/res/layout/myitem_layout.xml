@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:background="@drawable/touch_bg"
     android:gravity="center_vertical"
-    android:minHeight="@dimen/interval_48"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/interval_8"
     android:paddingLeft="@dimen/interval_16"
@@ -26,17 +25,18 @@
         android:layout_marginLeft="@dimen/interval_8"
         android:layout_weight="1"
         android:textColor="@color/myitem_left_text"
-        android:textSize="@dimen/textX" />
+        android:textSize="@dimen/textXX" />
 
     <com.mqby.mqlibrary.widget.MyEditText
         android:id="@+id/tv_right"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
         android:layout_weight="1.5"
         android:background="@android:color/transparent"
         android:gravity="center_vertical|right"
         android:minHeight="@dimen/interval_32"
-        android:textSize="@dimen/textX" />
+        android:textSize="@dimen/textXX" />
 
     <ImageView
         android:id="@+id/iv_right"
